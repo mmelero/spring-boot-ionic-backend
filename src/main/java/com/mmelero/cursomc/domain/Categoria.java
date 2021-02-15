@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Categoria implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -20,6 +22,8 @@ public class Categoria implements Serializable{
 	private Long id;
 	private String nome;
 	
+	//Anotação para evitar o cartteseano qdo há associações de muitos para muitos
+	@JsonManagedReference
 	//Assosciação da catergoria com produtos.
 	//Como a associação foi efetuada na classe de produtos, basta apenas pegar o
 	// nome da associação da classe produto criada 'categorias' e colocar na anotação
