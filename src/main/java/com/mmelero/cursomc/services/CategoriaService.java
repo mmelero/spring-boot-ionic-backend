@@ -13,9 +13,9 @@ public class CategoriaService {
 
 	//Decalar dependencia do tip de Objeto Repository
 	@Autowired
+	//a notação autowired torna a dependecia automaticamente estanciada pelo Spring
 	private CategoriaRepository repo;
 	
-	//a notação autowired torna a dependecia automaticamente estanciada pelo Spring
 	
 	public Categoria find(Long id) {
 		
