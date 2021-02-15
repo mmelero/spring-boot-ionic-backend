@@ -17,24 +17,24 @@ public class Categoria implements Serializable{
 	@Id
 	//Geração automatica dos ids da tabela Categoria
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String nome;
 	
 	public Categoria() {
 		
 	}
 
-	public Categoria(Integer id, String nome) {
+	public Categoria(Long id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
