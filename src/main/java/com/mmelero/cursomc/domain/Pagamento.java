@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
@@ -11,12 +13,16 @@ import javax.persistence.OneToOne;
 import com.mmelero.cursomc.domain.enuns.EstadoPagamento;
 
 @Entity
-public class Pagamento implements Serializable{
+//Mapeamento para herança, pois as tabelas PagamentoComBoleto e PagamentoComCartao
+//herdam a classe Pagamento
+//Colocar a classe abstrata para garantir que a classe não será instanciada.
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pagamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private Long id;
-	private EstadoPagamento estado;
+	private Integer estado;
 	
 	//Não será utilizado o gerador automatico de Id para a classe pgto,
 	//pois o pagamento será levado para o pedido, para este tipo de transação
@@ -25,11 +31,15 @@ public class Pagamento implements Serializable{
 	@JoinColumn(name = "pedido_id")
 	@MapsId
 	private Pedido pedido;
+	
+	public Pagamento() {
+		
+	}
 
 	public Pagamento(Long id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estado = estado;
+		this.estado = estado.getCod();
 		this.setPedido(pedido);
 	}
 
@@ -42,6 +52,16 @@ public class Pagamento implements Serializable{
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
+	
+	public EstadoPagamento getEstado() {
+		return EstadoPagamento.toEnum(estado);
+	}
+
+
+	public void setEstado(EstadoPagamento estado) {
+		this.estado = estado.getCod();
+	}
+	
 	
 	@Override
 	public int hashCode() {
@@ -68,5 +88,5 @@ public class Pagamento implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }
