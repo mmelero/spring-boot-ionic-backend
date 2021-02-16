@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mmelero.cursomc.domain.enuns.EstadoPagamento;
 
 @Entity
@@ -27,6 +28,7 @@ public abstract class Pagamento implements Serializable{
 	//Não será utilizado o gerador automatico de Id para a classe pgto,
 	//pois o pagamento será levado para o pedido, para este tipo de transação
 	// é utlizado as notoações abaixo:
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId

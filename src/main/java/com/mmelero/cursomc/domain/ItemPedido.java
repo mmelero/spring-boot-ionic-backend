@@ -5,10 +5,14 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	//iginorar no caso de serialização, nem o pedido e nem o produto
+	@JsonIgnore
 	//no jpa tendo um atributo outra classe com uma chave composta
 	// é necessario ir na classe de referencia(ItemPedidoPK), no caso pedido e colocar 
 	// a notação: @Embeddable, esta notação informa que a classe será um subtipo.
@@ -40,6 +44,7 @@ public class ItemPedido implements Serializable{
 	}
 
 	//Para ter acesso ao pedido, fora da classe itemPedido
+	@JsonIgnore
 	public Pedido getpedido() {
 		return id.getPedido();
 	}
