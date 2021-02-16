@@ -2,7 +2,9 @@ package com.mmelero.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -35,6 +38,20 @@ public class Produto implements Serializable{
 			inverseJoinColumns = @JoinColumn(name = "categoria_id")
 	)
 	List<Categoria> categorias = new ArrayList<>();
+	
+	//Classe pedido precisa saber os itens que contem nela
+	//comando Set<> - Conjunto, o comando Set<> garante que não havera itens repetidos.
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
+	
+	//Retornar a lista de pedido de um produto
+	public List<Pedido> getPedidos(){
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido x : itens) {
+			lista.add(x.getpedido());
+		}
+		return lista;
+	}
 	
 	public Produto() {
 		
@@ -81,6 +98,14 @@ public class Produto implements Serializable{
 		this.categorias = categorias;
 	}
 
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -105,7 +130,6 @@ public class Produto implements Serializable{
 			return false;
 		return true;
 	}
-	
 	
 	
 }
