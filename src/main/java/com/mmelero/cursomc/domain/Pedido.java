@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 
 @Entity
 public class Pedido implements Serializable{
@@ -17,6 +19,9 @@ public class Pedido implements Serializable{
 	private Long id;
 	private Date instante;
 	
+	//Notação necessaria para salvamento do pedido - evitar uma transação transiente
+	//Mapeamento bi derecional 1 para 1 entre pedido e Pagamento
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 	
 	private Cliente cliente;

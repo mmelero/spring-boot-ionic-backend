@@ -2,14 +2,28 @@ package com.mmelero.cursomc.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+
 import com.mmelero.cursomc.domain.enuns.EstadoPagamento;
 
+@Entity
 public class Pagamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@Id
 	private Long id;
 	private EstadoPagamento estado;
 	
+	//Não será utilizado o gerador automatico de Id para a classe pgto,
+	//pois o pagamento será levado para o pedido, para este tipo de transação
+	// é utlizado as notoações abaixo:
+	@OneToOne
+	@JoinColumn(name = "pedido_id")
+	@MapsId
 	private Pedido pedido;
 
 	public Pagamento(Long id, EstadoPagamento estado, Pedido pedido) {
