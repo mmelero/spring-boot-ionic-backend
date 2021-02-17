@@ -37,6 +37,7 @@ public class CategoriaService {
 
 	}
 	public void delete(Long id) {
+		
 		find(id);
 		try {
 		repo.deleteById(id);
