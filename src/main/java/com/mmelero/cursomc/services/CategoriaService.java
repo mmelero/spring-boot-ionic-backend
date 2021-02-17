@@ -5,10 +5,12 @@ import java.util.OptionalLong;
 
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mmelero.cursomc.domain.Categoria;
 import com.mmelero.cursomc.repositories.CategoriaRepository;
+import com.mmelero.cursomc.services.exceptions.DataIntegrityException;
 import com.mmelero.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -32,6 +34,17 @@ public class CategoriaService {
 
 	public Categoria update(Categoria obj) {
 		return repo.save(obj);
+
+	}
+	public void delete(Long id) {
+		find(id);
+		try {
+		repo.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir Categoria com produtos");
+			
+		}
 	}
 
 }
