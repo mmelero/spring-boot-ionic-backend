@@ -1,6 +1,9 @@
 package com.mmelero.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mmelero.cursomc.domain.Categoria;
+import com.mmelero.cursomc.dto.CategoriaDTO;
 import com.mmelero.cursomc.services.CategoriaService;
 
 @RestController
@@ -51,6 +55,16 @@ public class CategoriaResource {
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		//Busca a lista de categorias do banco
+		List<Categoria> list = service.findAll();
+		//Converter a lista para listaDto
+		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok(listDto);
+	
 	}
 	
 }

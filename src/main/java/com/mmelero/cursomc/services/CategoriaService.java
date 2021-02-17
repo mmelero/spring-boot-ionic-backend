@@ -1,9 +1,8 @@
 package com.mmelero.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.OptionalLong;
 
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -36,16 +35,22 @@ public class CategoriaService {
 		return repo.save(obj);
 
 	}
+
 	public void delete(Long id) {
-		
+
 		find(id);
 		try {
-		repo.deleteById(id);
-		}
-		catch(DataIntegrityViolationException e) {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir Categoria com produtos");
-			
+
 		}
+	}
+	
+	public List<Categoria> findAll(){
+		
+		return repo.findAll();
+		
 	}
 
 }
