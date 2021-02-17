@@ -1,7 +1,9 @@
 package com.mmelero.cursomc.services;
 
 import java.util.Optional;
+import java.util.OptionalLong;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +24,13 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
-	
+
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
+		return repo.save(obj);
+	}
+
+	public Categoria update(Categoria obj) {
 		return repo.save(obj);
 	}
 
