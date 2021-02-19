@@ -2,20 +2,38 @@ package com.mmelero.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.mmelero.cursomc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotBlank(message="Nome não pode ser vazio!!!")
+	@Length(min=5, max=120, message = "Nome deve ter entre 5 a 120 caracteres!!!")
 	private String nome;
+
+	@NotBlank(message="Nome não pode ser vazio!!!")
+	@Email(message="Email invalido!!!")
 	private String email;
+	@NotBlank(message="Nome não pode ser vazio!!!")
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	@NotBlank(message="Nome não pode ser vazio!!!")
 	private String logradouro;
+	@NotBlank(message="Nome não pode ser vazio!!!")
 	private String numero;
 	private String complemento;
 	private String bairro;
+	@NotBlank(message="Nome não pode ser vazio!!!")
 	private String cep;
 	
+	@NotBlank(message="Nome não pode ser vazio!!!")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
