@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.mmelero.cursomc.domain.Categoria;
+import com.mmelero.cursomc.dto.CategoriaDTO;
 import com.mmelero.cursomc.repositories.CategoriaRepository;
 import com.mmelero.cursomc.services.exceptions.DataIntegrityException;
 import com.mmelero.cursomc.services.exceptions.ObjectNotFoundException;
@@ -60,6 +61,11 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page,linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	//Função auxiliar para validação do dto
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 
 }
