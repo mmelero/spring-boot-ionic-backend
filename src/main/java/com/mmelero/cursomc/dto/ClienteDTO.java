@@ -57,5 +57,4 @@ public class ClienteDTO implements Serializable{
 		this.email = email;
 	}
 	
-	
 }
