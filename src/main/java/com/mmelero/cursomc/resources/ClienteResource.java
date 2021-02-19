@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mmelero.cursomc.domain.Cliente;
 import com.mmelero.cursomc.dto.ClienteDTO;
+import com.mmelero.cursomc.dto.ClienteNewDTO;
 import com.mmelero.cursomc.services.ClienteService;
 
 @RestController
@@ -38,7 +39,7 @@ public class ClienteResource {
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto){
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
 		Cliente obj = service.fromDTO(objDto);
 		obj.setId(null);
 		obj = service.insert(obj);
@@ -87,7 +88,5 @@ public class ClienteResource {
 		return ResponseEntity.ok(listDto);
 	
 	}
-
-	
 	
 }
