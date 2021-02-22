@@ -48,7 +48,6 @@ public class Pedido implements Serializable{
 	public Pedido() {
 		
 	}
-
 	public Pedido(Long id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;

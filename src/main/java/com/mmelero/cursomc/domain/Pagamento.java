@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.mmelero.cursomc.domain.enuns.EstadoPagamento;
 
 @Entity
@@ -18,6 +19,8 @@ import com.mmelero.cursomc.domain.enuns.EstadoPagamento;
 //herdam a classe Pagamento
 //Colocar a classe abstrata para garantir que a classe não será instanciada.
 @Inheritance(strategy = InheritanceType.JOINED)
+//necessario qdo se trabalha com classe abstrata / json 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 
