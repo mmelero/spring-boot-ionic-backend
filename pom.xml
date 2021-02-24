@@ -13,7 +13,7 @@
 	<artifactId>cursomc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cursomc</name>
-	<description>Worksoph  Spring Boot MongoDb</description>
+	<description>Estudo de caso Java para curso de modelagem conceitual com UML</description>
 	<properties>
 		<java.version>15</java.version>
 	</properties>
