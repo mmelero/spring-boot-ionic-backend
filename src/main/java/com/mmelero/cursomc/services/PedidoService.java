@@ -10,9 +10,11 @@ import com.mmelero.cursomc.domain.ItemPedido;
 import com.mmelero.cursomc.domain.PagamentoComBoleto;
 import com.mmelero.cursomc.domain.Pedido;
 import com.mmelero.cursomc.domain.enuns.EstadoPagamento;
+import com.mmelero.cursomc.repositories.ClienteRepository;
 import com.mmelero.cursomc.repositories.ItemPedidoRepository;
 import com.mmelero.cursomc.repositories.PagamentoRepository;
 import com.mmelero.cursomc.repositories.PedidoRepository;
+import com.mmelero.cursomc.repositories.ProdutoRepository;
 import com.mmelero.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -34,6 +36,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	ClienteService clienteService;
 
 	public Pedido find(Long id) {
 		Optional<Pedido> obj = repo.findById(id);
@@ -44,6 +49,7 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PEDENTE);
 		obj.getPagamento().setPedido(obj);
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
@@ -58,11 +64,15 @@ public class PedidoService {
 		//Pegando os itens do pedido / pesquisa de produto e valor do de cada item.
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		//gravando os itens do pedido no bco de dados
 		itemPedidoRepository.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
+	
+	
 }
