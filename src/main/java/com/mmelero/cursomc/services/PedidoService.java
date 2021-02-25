@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.mmelero.cursomc.domain.ItemPedido;
@@ -75,6 +76,11 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
+	}
+	
+	@Bean
+	public EmailService emaService() {
+		return new SmtpEmailService();
 	}
 	
 	
