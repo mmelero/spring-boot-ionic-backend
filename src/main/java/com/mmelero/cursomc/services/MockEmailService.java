@@ -1,0 +1,18 @@
+package com.mmelero.cursomc.services;
+
+import org.slf4j.Logger;
+import org.springframework.mail.SimpleMailMessage;
+
+public class MockEmailService extends AbstractEmailService{
+
+	//Para mostrar no console / servidor o email, 
+	private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(MockEmailService.class);
+	@Override
+	public void sendEmail(SimpleMailMessage msg) {
+		LOG.info("Simulando envio de Email....");
+		LOG.info(msg.toString());
+		LOG.info("Email enviado");
+		
+	}
+
+}
