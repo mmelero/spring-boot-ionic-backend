@@ -25,6 +25,9 @@ public class ClienteNewDTO implements Serializable {
 	private Integer tipo;
 	
 	@NotBlank(message="Nome não pode ser vazio!!!")
+	private String senha;
+	
+	@NotBlank(message="Nome não pode ser vazio!!!")
 	private String logradouro;
 	@NotBlank(message="Nome não pode ser vazio!!!")
 	private String numero;
@@ -146,4 +149,14 @@ public class ClienteNewDTO implements Serializable {
 	public void setCidadeId(Long cidadeId) {
 		this.cidadeId = cidadeId;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
 }
