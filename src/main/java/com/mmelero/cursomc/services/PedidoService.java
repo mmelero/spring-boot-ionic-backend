@@ -11,11 +11,9 @@ import com.mmelero.cursomc.domain.ItemPedido;
 import com.mmelero.cursomc.domain.PagamentoComBoleto;
 import com.mmelero.cursomc.domain.Pedido;
 import com.mmelero.cursomc.domain.enuns.EstadoPagamento;
-import com.mmelero.cursomc.repositories.ClienteRepository;
 import com.mmelero.cursomc.repositories.ItemPedidoRepository;
 import com.mmelero.cursomc.repositories.PagamentoRepository;
 import com.mmelero.cursomc.repositories.PedidoRepository;
-import com.mmelero.cursomc.repositories.ProdutoRepository;
 import com.mmelero.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -73,9 +71,16 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		//gravando os itens do pedido no bco de dados
+//		itemPedidoRepository.saveAll(obj.getItens());
+		//Envia e-mail de modo plano
+//		emailService.sendOrderConfirmationEmail(obj);
+//		return obj;
+		//gravando os itens do pedido no bco de dados
 		itemPedidoRepository.saveAll(obj.getItens());
-		emailService.sendOrderConfirmationEmail(obj);
+		//Envia e-mail de modo HTML
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+
 	}
 	
 	@Bean
