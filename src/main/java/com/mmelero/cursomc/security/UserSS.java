@@ -39,7 +39,6 @@ public class UserSS implements UserDetails{
 		this.senha = senha;
 		//converter o conjunto de perfis para a lista
 		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
-				;
 	}
 
 	@Override

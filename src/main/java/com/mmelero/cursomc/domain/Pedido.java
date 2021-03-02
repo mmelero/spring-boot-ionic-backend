@@ -18,11 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mmelero.cursomc.repositories.ProdutoRepository;
-import com.mmelero.cursomc.services.ClienteService;
 
 @Entity
 public class Pedido implements Serializable{

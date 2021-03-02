@@ -22,6 +22,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, UserDetailsService userDetailsService ) {
 		super(authenticationManager);
 		this.jwtUtil = jwtUtil;
+		//busca a informação do usuario no bco de dados - email
 		this.userDetailsService = userDetailsService;
 	}
 
@@ -30,10 +31,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
 	protected void doFilterInternal(HttpServletRequest request,
 									HttpServletResponse response,
 									FilterChain chain) throws IOException, ServletException {
-		String header = request.getHeader("Authorization");
-		
-		if(header != null && header.startsWith("Bearer ")) {
-			UsernamePasswordAuthenticationToken auth = getAuthentication(header.substring(7));
+/*		String header = null;
+		header = request.getHeader("Authorization");
+*/		
+		if((request.getHeader("Authorization") != null && request.getHeader("Authorization").startsWith("Bearer "))) {
+			UsernamePasswordAuthenticationToken auth = getAuthentication(request, request.getHeader("Authorization").substring(7));
 			if(auth != null) {
 				//liberar a autenticação
 				SecurityContextHolder.getContext().setAuthentication(auth);
@@ -44,7 +46,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
 	}
 	
 	//gerar o objeto UsernamePasswordAuthenticationToken a partir do token
-	private UsernamePasswordAuthenticationToken getAuthentication(String token) {
+	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, String token) {
 		if(jwtUtil.tokenValido(token)) {
 			String username = jwtUtil.getUsername(token);
 			UserDetails user = userDetailsService.loadUserByUsername(username);

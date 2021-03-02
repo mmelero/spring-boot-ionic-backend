@@ -5,8 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.mmelero.cursomc.domain.Cliente;
 import com.mmelero.cursomc.domain.ItemPedido;
 import com.mmelero.cursomc.domain.PagamentoComBoleto;
 import com.mmelero.cursomc.domain.Pedido;
@@ -14,6 +18,8 @@ import com.mmelero.cursomc.domain.enuns.EstadoPagamento;
 import com.mmelero.cursomc.repositories.ItemPedidoRepository;
 import com.mmelero.cursomc.repositories.PagamentoRepository;
 import com.mmelero.cursomc.repositories.PedidoRepository;
+import com.mmelero.cursomc.security.UserSS;
+import com.mmelero.cursomc.services.exceptions.AutorizationException;
 import com.mmelero.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -81,6 +87,32 @@ public class PedidoService {
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 
+	}
+	//buscar os pedidos do cliente logado
+	/*public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AutorizationException("Acesso negado!!!");
+		}
+		PageRequest pageRequest = PageRequest.of(page,linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteService.find(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
+	}*/
+//	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+//		UserSS user = UserService.authenticated();
+//		if (user == null) {
+//			throw new AutorizationException("Acesso negado");
+//		}
+//		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+//		Cliente cliente =  clienteService.find(user.getId());
+//		return repo.findByCliente(cliente, pageRequest);
+//	}
+
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		Cliente cliente = clienteService.find(user.getId());
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findByCliente(cliente, pageRequest);
 	}
 	
 	@Bean

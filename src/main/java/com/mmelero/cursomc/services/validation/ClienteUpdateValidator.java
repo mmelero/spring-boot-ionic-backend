@@ -29,6 +29,7 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 	@Autowired
 	private ClienteRepository repo;
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
 		

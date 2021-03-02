@@ -28,7 +28,7 @@ public class JWTUtil {
 	}
 	
 	public Boolean tokenValido(String token) {
-		//Claims (reenvidicação) -  tipo do jwt que armazenas informações do token
+		//Claims (reenvidicação) -  tipo do jwt que armazenas informações do token - ususario /tempo de expiração
 		Claims claims = getClaims(token);
 		if(claims != null) {
 			String  username = claims.getSubject();
@@ -45,6 +45,7 @@ public class JWTUtil {
 		//Claims (reenvidicação) -  tipo do jwt que armazenas informações do token
 		Claims claims = getClaims(token);
 		if(claims != null) {
+			
 			return claims.getSubject();
 		}
 		return null;
@@ -53,8 +54,10 @@ public class JWTUtil {
 
 	//metodo para recupera os claims a partir de um token
 	private Claims getClaims(String token) {
+
 		try {
-		return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
+	
+			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
 		}
 		catch(Exception e) {
 			return null;
