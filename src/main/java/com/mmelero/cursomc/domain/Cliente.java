@@ -32,7 +32,6 @@ public class Cliente  implements Serializable{
 	private String email;
 	private String cpfOuCpnj;
 	private Integer tipo;
-	private String imageUrl;
 	
 	@JsonIgnore
 	private String senha;
@@ -152,16 +151,6 @@ public class Cliente  implements Serializable{
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
 	
 	@Override
 	public int hashCode() {
