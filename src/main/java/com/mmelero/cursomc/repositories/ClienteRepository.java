@@ -9,4 +9,5 @@ public interface ClienteRepository  extends JpaRepository<Cliente, Long>{
 	//Pesquisa no banco de dados clientes com e-mail repassado
 	//Função do springData - framework
 	Cliente findByEmail(String email);
+
 }

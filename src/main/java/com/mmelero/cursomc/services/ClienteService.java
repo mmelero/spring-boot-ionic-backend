@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.licensemanager.model.AuthorizationException;
 import com.mmelero.cursomc.domain.Cidade;
 import com.mmelero.cursomc.domain.Cliente;
 import com.mmelero.cursomc.domain.Endereco;
@@ -117,6 +118,36 @@ public class ClienteService {
 	
 	//metodo especifico para efetuar upload da foto especifico do cliente
 	public URI uploadProfilePicture(MultipartFile multiparteFile) {
-		return s3Service.uploadFile(multiparteFile);
+/*		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		
+		URI uri = s3Service.uploadFile(multiparteFile);
+		
+		Cliente cli = find(user.getId());
+		if(cli != null) {
+		   cli.setImageUrl(uri.toString());
+		   repo.save(cli);
+		}   
+		return uri;*/
+		UserSS user = UserService.authenticated();
+
+		if(user == null) {
+
+		throw new AuthorizationException("Acesso negado!");
+
+		}
+
+		URI uri = s3Service.uploadFile(multiparteFile);
+
+		Optional<Cliente> cli = repo.findById(user.getId());
+
+		cli.get().setImageUrl(uri.toString());
+
+		repo.save(cli.get());
+
+		return uri;
+		
 	}
 }
